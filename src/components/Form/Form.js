@@ -1,21 +1,22 @@
 import React from 'react';
 
-function Form() {
-  const [input, setInput] = React.useState('');
+function Form({guessHistory, setGuessHistory}) {
+  const [guess, setGuess] = React.useState('');
   return (
     <>
       <form
         className="guess-input-wrapper"
         onSubmit={event => {
           event.preventDefault();
-          console.log({"guess" : input});
-          setInput('');
+          console.log({"guess" : guess});
+          setGuessHistory([...guessHistory, {'id': Math.random(), 'guess' : guess}]); 
+          setGuess('');
         }
         }>
         <label htmlFor="guess-input">Enter guess:</label>
         <input
           id="guess-input"
-          value={input}
+          value={guess}
           required
           maxLength={5}
           minLength={5}
@@ -23,7 +24,7 @@ function Form() {
           title='Five letter word'
           onChange={event => {
             const nextInput = event.target.value.toUpperCase();
-            setInput(nextInput);
+            setGuess(nextInput);
           }}
           type="text" />
       </form>
